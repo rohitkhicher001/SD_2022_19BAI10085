@@ -327,7 +327,7 @@ int main() {
             }
             cout<<endl;
         }
-        cout<<countA<<" "<<countB<<endl;
+
     }
     if(countA == 0)
     {
