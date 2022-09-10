@@ -4,6 +4,7 @@ void actionL(bool turnA,int &countA,int &countB,string position,vector<vector<st
 void actionR(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m);
 void actionF(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m);
 void actionB(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m);
+void actioninput(bool turnA,int &countA,int &countB,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m);
 
 
 void actionL(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
@@ -11,6 +12,16 @@ void actionL(bool turnA,int &countA,int &countB,string position,vector<vector<st
    string temp = position;
    int left = m[position].first;
    int right = m[position].second;
+   if(right == 0 && turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
+   else if(right == 4 && !turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
    if(turnA)
    {
    if(v[left][right-1]!= "#")
@@ -44,6 +55,16 @@ void actionR(bool turnA,int &countA,int &countB,string position,vector<vector<st
 string temp = position;
    int left = m[position].first;
    int right = m[position].second;
+   if(right == 0 && !turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
+   else if(right == 4 && turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
    if(turnA)
    {
 
@@ -77,6 +98,16 @@ string temp = position;
 {
     string temp = position;
    int left = m[position].first;
+   if(left == 0 && turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
+   else if(left == 4 && !turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
    int right = m[position].second;
    if(turnA)
    {
@@ -113,6 +144,16 @@ string temp = position;
 string temp = position;
    int left = m[position].first;
    int right = m[position].second;
+   if(left == 4 && turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
+   else if(left == 0 && !turnA)
+   {
+       cout<<"Troop is going out of bounds"<<endl;
+       actioninput(turnA,countA,countB,v,m);
+   }
    if(turnA)
    {
    if(v[left+1][right]!= "#")
