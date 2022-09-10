@@ -36,7 +36,7 @@ void actionL(bool turnA,int &countA,int &countB,string position,vector<vector<st
    m[temp] = {left,right-1};
    }
    else{
-     actionR(turnA,countA,countB,position,v,m);
+     actionR(!turnA,countA,countB,position,v,m);
    }
 }
 void actionR(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
@@ -71,7 +71,7 @@ string temp = position;
    }
    else
    {
-      actionL(turnA,countA,countB,position,v,m);
+      actionL(!turnA,countA,countB,position,v,m);
    }
 }void actionF(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
 {
@@ -104,7 +104,7 @@ string temp = position;
    }
    else
    {
-       actionB(turnA,countA,countB,position,v,m);
+       actionB(!turnA,countA,countB,position,v,m);
    }
 
 }void actionB(bool turnA,int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
@@ -140,7 +140,7 @@ string temp = position;
    else
    {
 
-       actionF(turnA,countA,countB,position,v,m);
+       actionF(!turnA,countA,countB,position,v,m);
    }
 
 }
@@ -149,15 +149,20 @@ void actioninput(bool turnA,int &countA,int &countB,vector<vector<string>> &v,un
     cout<<"Choose player and action (Example: A-p2 L)"<<endl;
     string position;
     cin>>position;
-    if(position[0]!= 'A' || position[0] != 'B' || position[1]!= '-' || position[2]!='p' || position[3]>'5' || position[3]<'1' )
+    if((position[0]!= 'A' && position[0] != 'B') || position[1]!= '-' || position[2]!='p' || position[3]>'5' && position[3]<'1' )
     {
         cout<<"Invalid position"<<endl;
         actioninput(turnA,countA,countB,v,m);
     }
     string action;
     cin>>action;
-    if(action!="L" || action!= "R" || action!= "F" || action != "B")
+    if(action!="L" && action!= "R" && action!= "F" && action != "B")
     {
+        actioninput(turnA,countA,countB,v,m);
+    }
+    if(turnA&&position[0] == 'B')
+    {
+        cout<<"Wrong turn please play fairly"<<endl;
         actioninput(turnA,countA,countB,v,m);
     }
     if(action == "L")
@@ -238,11 +243,11 @@ int main() {
     vector<string> B_characters = input();
     for(int i=0;i<5;i++)
     {
-        v[0][i] = "A-"+A_characters[i];
+        v[0][i] = "B-"+B_characters[i];
     }
      for(int i=0;i<5;i++)
     {
-        v[4][i] = "B-"+B_characters[i];
+        v[4][i] = "A-"+A_characters[i];
     }
      unordered_map<string,pair<int,int>> m;
     for(int i=0;i<5;i++)
