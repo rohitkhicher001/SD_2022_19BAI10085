@@ -1,12 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-void actionL(string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
+void actionL(int &countA,int &countB,string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
 {
    string temp = position;
    int left = m[position].first;
    int right = m[position].second;
+   if(v[left][right-1]!= "#")
+   {
+
+       char first_character = v[left][right-1][0];
+       if(first_character == 'A' && v[left][right][0] == 'B')
+       {
+           countA--;
+       }
+       else if(first_character == 'B' && v[left][right][0] == 'A')
+       {
+
+           countB--;
+       }
+       else{
+        cout<<"You cannot kill your own troops"<<endl;
+        return;
+       }
+    }
    v[left][right-1] = v[left][right];
-   v[left][right]="";
+   v[left][right]="#";
    m[temp] = {left,right-1};
 }
 void actionR(string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
@@ -15,27 +33,29 @@ string temp = position;
    int left = m[position].first;
    int right = m[position].second;
    v[left][right+1] = v[left][right];
-   v[left][right]="";
+   v[left][right]="#";
    m[temp] = {left,right+1};
 }void actionF(string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
 {
     string temp = position;
    int left = m[position].first;
    int right = m[position].second;
-   v[left+1][right] = v[left][right];
-   v[left][right]="";
-   m[temp] = {left+1,right};
+   v[left-1][right] = v[left][right];
+   v[left][right]="#";
+   m[temp] = {left-1,right};
 
 }void actionB(string position,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
 {
+    cout<<"first success";
 string temp = position;
    int left = m[position].first;
    int right = m[position].second;
-   v[left][right-1] = v[left][right];
-   v[left][right]="";
-   m[temp] = {left,right-1};
+   v[left+1][right] = v[left][right];
+   v[left][right]="#";
+   m[temp] = {left+1,right};
+   cout<<"success2";
 }
-void actioninput(vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
+void actioninput(int &countA,int &countB,vector<vector<string>> &v,unordered_map<string,pair<int,int>> &m)
 {
     cout<<"Choose player and action (Example: A-p2 L)"<<endl;
     string position;
@@ -44,7 +64,7 @@ void actioninput(vector<vector<string>> &v,unordered_map<string,pair<int,int>> &
     cin>>action;
     if(action == "L")
     {
-        actionL(position,v,m);
+        actionL(countA,countB,position,v,m);
     }
     else  if(action == "R")
     {
@@ -56,7 +76,9 @@ void actioninput(vector<vector<string>> &v,unordered_map<string,pair<int,int>> &
     }
     else  if(action == "B")
     {
+        cout<<"success0";
         actionB(position,v,m);
+        cout<<"success1";
     }
 
 }
@@ -95,7 +117,7 @@ vector<string> A_characters;
 
 }
 int main() {
-    vector<string> temp(5,"a");
+    vector<string> temp(5,"#");
     vector<vector<string>> v(5,temp);
 
     vector<string> A_characters = input();
@@ -130,9 +152,9 @@ int main() {
         }
     int countA =5;
     int countB= 5;
-    while(true)
+    while(countA && countB)
     {
-        actioninput(v,m);
+        actioninput(countA,countB,v,m);
         for(auto i: v)
         {
             for(auto j: i)
@@ -143,6 +165,7 @@ int main() {
             }
             cout<<endl;
         }
+        cout<<countA<<" "<<countB<<endl;
     }
 
     return 0;
